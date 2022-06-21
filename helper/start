@@ -1,0 +1,5 @@
+#!/bin/bash
+
+/helper/wait localhost:8085 -- python3 topic.py &
+
+gcloud beta emulators pubsub start --project=${PUBSUB_PROJECT_ID} --log-http --verbosity=debug --user-output-enabled
