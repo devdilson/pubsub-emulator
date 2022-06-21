@@ -26,7 +26,7 @@ def create_subscription(project_id: str, topic_id: str, subscription_id: str) ->
     print(f"Subscription created: {subscription}")
     sys.stdout.flush()
 
-def print_messages(project_id, subscription_id):
+def receive_message(project_id, subscription_id):
   subscriber = pubsub_v1.SubscriberClient()
   subscription_path = subscriber.subscription_path(project_id, subscription_id)
 
@@ -45,15 +45,13 @@ def print_messages(project_id, subscription_id):
           streaming_pull_future.cancel()  # Trigger the shutdown.
           streaming_pull_future.result()  # Block until the shutdown is complete.
 
+def send_message(project_id, topic_id, data_str):
+  publisher = pubsub_v1.PublisherClient()
+  topic_path = publisher.topic_path(project_id, topic_id)
+  data = data_str.encode("utf-8")
+  future = publisher.publish(topic_path, data)
+  print(future.result())
+  print(f"Published messages to {topic_path}.")
+  sys.stdout.flush()
 
-project_id='test-container'
-topic_id='test_topic'
-subscription_id='subscription_id'
 
-if __name__ == "__main__":
-  create_topic(project_id, topic_id)
-  create_subscription(project_id, topic_id, subscription_id)
-  print_messages(project_id, subscription_id)
-
-
-# create_subscriptionproject_id, subscription_id)

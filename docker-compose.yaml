@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  pubsub:
+    build:
+      context: .
+    ports:
+      - 8500:8500
+    volumes:
+      - ./create_topic.py:/init/create_topic.py

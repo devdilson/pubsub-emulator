@@ -1,5 +1,16 @@
 #!/bin/bash
 
-/helper/wait localhost:8085 -- python3 topic.py &
+
+run_init (){
+    for f in /init/*
+    do
+      echo "Running $f init file"
+      /helper/wait localhost:8085 -- python3 $f &
+    done
+}
+
+run_init
+
+
 
 gcloud beta emulators pubsub start --project=${PUBSUB_PROJECT_ID} --log-http --verbosity=debug --user-output-enabled

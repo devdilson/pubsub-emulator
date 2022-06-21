@@ -43,13 +43,9 @@ RUN ARCH=`cat /tmp/arch` && \
 RUN pip3 install google-cloud-pubsub==2.13.0
 
 COPY helper /helper
-COPY topic.py topic.py
+
+COPY /init /init
 
 RUN chmod -R +x /helper
 
 ENTRYPOINT "helper/start"
-
-
-    ## docker build -t pubsub .
-    ## docker container run -it pubsub /bin/bash
-    ## docker run pubsub -p 8500:8500
